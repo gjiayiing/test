@@ -67,7 +67,9 @@ void main() {
     // HARD rectangular footprint (frustum projection)
     if (any(lessThan(shadowPos.xyz, vec3(0.0))) ||
         any(greaterThan(shadowPos.xyz, vec3(1.0)))) {
-        discard;
+        FragColor = color;
+        return;
+
     }
 
     // HARD range cutoff (this defines footprint length)
@@ -75,7 +77,8 @@ void main() {
     vec4 fragWC   = czm_inverseView * vec4(positionEC.xyz, 1.0);
 
     if (distance(sensorWC.xyz, fragWC.xyz) > view_distance) {
-        discard;
+        FragColor = color;
+        return;
     }
 
     /* =========================================================
