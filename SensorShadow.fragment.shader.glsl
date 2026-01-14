@@ -53,7 +53,6 @@ float getDepth(in vec4 depth){
 
 void main()
 {
-    
     vec4 color = texture(colorTexture, v_textureCoordinates);
     vec4 cDepth = texture(depthTexture, v_textureCoordinates);
 
@@ -81,18 +80,18 @@ void main()
     shadowPosition /= shadowPosition.w;
 
     // HARD CLIP outside frustum
-    //if (any(lessThan(shadowPosition.xyz, vec3(0.0))) ||
-    //    any(greaterThan(shadowPosition.xyz, vec3(1.0)))) {
-    //    discard;
-    //}
+    if (any(lessThan(shadowPosition.xyz, vec3(0.0))) ||
+        any(greaterThan(shadowPosition.xyz, vec3(1.0)))) {
+        discard;
+    }
 
     // HARD CLIP outside range
-    //vec4 sensorWC = czm_inverseView * vec4(shadowMap_camera_positionEC.xyz, 1.0);
-    //vec4 fragWC   = czm_inverseView * vec4(positionEC.xyz, 1.0);
+    vec4 sensorWC = czm_inverseView * vec4(shadowMap_camera_positionEC.xyz, 1.0);
+    vec4 fragWC   = czm_inverseView * vec4(positionEC.xyz, 1.0);
 
-    //if (distance(sensorWC.xyz, fragWC.xyz) > view_distance) {
-    //    discard;
-    //}
+    if (distance(sensorWC.xyz, fragWC.xyz) > view_distance) {
+        discard;
+    }
 
     /* =========================================================
        SHADOW VISIBILITY
