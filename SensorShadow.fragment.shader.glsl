@@ -53,6 +53,8 @@ float getDepth(in vec4 depth){
 
 void main()
 {
+    FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+    return;
     vec4 color = texture(colorTexture, v_textureCoordinates);
     vec4 cDepth = texture(depthTexture, v_textureCoordinates);
 
